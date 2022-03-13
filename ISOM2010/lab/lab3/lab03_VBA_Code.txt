@@ -1,0 +1,68 @@
+Public Sub Calculate_Change()
+    Dim i As Long
+    
+    Cells(1, "H").Value = "Change"
+    
+    i = 2
+    Do Until IsEmpty(Cells(i + 1, "G"))
+        Cells(i, "H").Value = Cells(i, "G").Value - Cells(i + 1, "G").Value
+        i = i + 1
+    Loop
+End Sub
+
+Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
+' Between each draw, stop (sleep) for some time to let people see the flashing
+' effects.
+Public Sub PlaySlotMachine()
+    'Define the variable here
+    Dim num1 As Integer, num2 As Integer, num3 As Integer
+    Dim count As Integer
+    Randomize Timer
+    
+    'draw the slot machine for 50 times
+    For count = 1 To 50
+    
+        ' Randomly generate a number from 0-1 to num1 then *3 +1
+        num1 = Int(Rnd() * 3 + 1)
+        
+        ' If num1=1 then return happy face in cell B2, elseif num1=2
+        ' then return normal face in cell B2. '
+        ' All other value will return unhappy face in cell B2
+        
+        If num1 = 1 Then
+            Cells(2, "B").Value = "J"
+        ElseIf num1 = 2 Then
+            Cells(2, "B").Value = "K"
+        Else
+            Cells(2, "B").Value = "L"
+        End If
+        
+        num2 = Int(Rnd() * 3 + 1)
+        
+        If num2 = 1 Then
+            Cells(2, "C").Value = "J"
+        ElseIf num2 = 2 Then
+            Cells(2, "C").Value = "K"
+        Else
+            Cells(2, "C").Value = "L"
+        End If
+        
+        num3 = Int(Rnd() * 3 + 1)
+        
+        If num3 = 1 Then
+            Cells(2, "D").Value = "J"
+        ElseIf num3 = 2 Then
+            Cells(2, "D").Value = "K"
+        Else
+            Cells(2, "D").Value = "L"
+        End If
+        
+        'The closer to the end of the draw, the slower are the flashing effects
+        Sleep count * 4
+    Next count
+    
+    'If num1=num2=num3, then will display message box
+    If (num1 = num2 And num1 = num3) Then
+        MsgBox "Congratulation! You are so lucky today"
+    End If
+End Sub
